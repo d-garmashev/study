@@ -4,16 +4,11 @@
 import json
 import chardet
 
-def detect_enconding(filename):
-    with open(filename, 'rb') as f:
-        data = f.read()
-        encoding_result = chardet.detect(data)['encoding']
-        return encoding_result
-
 def file_to_json(filename):
     with open(filename, 'rb') as f:
         data = f.read()
-    data_json = json.loads(data.decode(detect_enconding(filename)))
+        encoding_result = chardet.detect(data)['encoding']
+    data_json = json.loads(data.decode(encoding_result))
     return data_json
 
 def merge_texts_split_by_words(input_json):
