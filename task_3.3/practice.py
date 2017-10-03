@@ -45,6 +45,6 @@ translate_it('ES.txt', 'ES_RU.txt', 'es')
 # FR -> RU translation
 translate_it('FR.txt', 'FR_RU.txt', 'fr')
 
-# FR -> RU translation
+# FR -> EN translation
 translate_it('FR.txt', 'FR_EN.txt', 'fr', 'en')
 
