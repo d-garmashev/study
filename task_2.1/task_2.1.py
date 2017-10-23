@@ -40,27 +40,25 @@ cook_book = {
 }
 
 def write_cook_book_to_file(filename, cook_book_dict):
-    f = open(filename, "w")
-    for dish in cook_book_dict.keys():
-        f.write(dish)
-        f.write('\n')
-        f.write(str(len(cook_book_dict[dish])))
-        f.write('\n')
-        for ingridient in cook_book_dict[dish]:
-            ingridient_string = ' '.join([ingridient['ingridient_name'], '|', str(ingridient['quantity']),
-                                          '|', ingridient['measure']])
-            f.write(ingridient_string)
-            f.write('\n')
-    f.close()
+    with open(filename, "w") as f:
+        for dish in cook_book_dict.keys():
+                f.write(dish)
+                f.write('\n')
+                f.write(str(len(cook_book_dict[dish])))
+                f.write('\n')
+                for ingridient in cook_book_dict[dish]:
+                    ingridient_string = ' '.join([ingridient['ingridient_name'], '|', str(ingridient['quantity']),
+                                                  '|', ingridient['measure']])
+                    f.write(ingridient_string)
+                    f.write('\n')
 
-write_cook_book_to_file('cook_book.txt', cook_book)
 
 def read_cook_book_from_file(filename):
     cook_book_from_file = {}
     with open('cook_book.txt', "r") as f:
         for line in f:
-            ln = line.split('\n')[0]
-            if ln.isalpha():
+            ln = line.strip()
+            if not any(i.isdigit() for i in ln):  # if string doesn't contain digit - it's dish name
                 dish = ln
                 ingridient_list = []
             if not ln.isalpha() and not ln.isdigit():
@@ -68,21 +66,13 @@ def read_cook_book_from_file(filename):
                                    'measure': ln.split(' | ')[2]}
                 ingridient_list.append(ingridient_dict)
             cook_book_from_file[dish] = ingridient_list
-    f.close()
     return cook_book_from_file
 
 
-cook_book_from_file = read_cook_book_from_file('cook_book.txt')
-
-if cook_book == cook_book_from_file:
-    print('OK. Cook book is saved and read correctly.')
-else:
-    print('Not OK')
-
-def get_shop_list_by_dishes(dishes, person_count):
+def get_shop_list_by_dishes(cook_book_dict, dishes, person_count):
     shop_list = {}
     for dish in dishes:
-        for ingridient in cook_book_from_file[dish]:
+        for ingridient in cook_book_dict[dish]:
             new_shop_list_item = dict(ingridient)
             new_shop_list_item['quantity'] *= person_count
             if new_shop_list_item['ingridient_name'] not in shop_list:
@@ -99,12 +89,14 @@ def print_shop_list(shop_list):
                                 shop_list_item['measure']))
 
 
-def create_shop_list():
+def create_shop_list(filename):
+    cook_book_dict = read_cook_book_from_file(filename)
     person_count = int(input('Введите количество человек: '))
     dishes = input('Введите блюда в расчете на одного человека (через запятую): ') \
         .lower().split(', ')
-    shop_list = get_shop_list_by_dishes(dishes, person_count)
+    shop_list = get_shop_list_by_dishes(cook_book_dict, dishes, person_count)
     print_shop_list(shop_list)
 
 
-create_shop_list()
+write_cook_book_to_file('cook_book.txt', cook_book)
+create_shop_list('cook_book.txt')
