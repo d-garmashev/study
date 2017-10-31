@@ -7,132 +7,159 @@
 
 
 # Базовый класс должен определять общие характеристики и интерфейс.
-class FarmAnimals:
+class Animals:
+    animal_name = ''
     animal_shout = '' # e.g. ga-ga for gooose
     animal_eats = ''  # e.g. grain for duck
     headcount = 0 # number of animals in farm
     legs_num = 0 # number of legs
     mass = 0 # mass of animal
-    gives_milk = False
-    gives_meat = False
-    gives_eggs = False
 
     def animal_shouts(self):
         print(self.animal_shout)
 
     def feed_aminal(self, food_kg):
-        print('Eat',food_kg,'kg of','animal_eats.')
+        print('Eat', food_kg, 'kg of', 'animal_eats.')
+
+# Коровы, козы, овцы, свиньи
+class AnimalsBeasts(Animals):
+    needs_graze = False
+    gives_meat = False
+    gives_milk = False
 
     def take_profit(self):
         if self.gives_milk:
             print('Now you have milk.')
-        elif self.gives_eggs:
-            print('Now you have eggs.')
         elif self.gives_meat:
             print('Now you have meat.')
-        else:
-            print('The animal is not for milk or meat.')
-
-
-# Коровы, козы, овцы, свиньи
-class FarmAnimalsBeasts(FarmAnimals):
-    needs_graze = False
 
 
 # Утки, куры, гуси
-class FarmAnimalsBirds(FarmAnimals):
+class AnimalsBirds(Animals):
     can_swim = False
+    gives_meat = False
+    gives_eggs = False
+
+    def take_profit(self):
+        if self.gives_eggs:
+            print('Now you have eggs.')
+        elif self.gives_meat:
+            print('Now you have meat.')
+
+
 
 # коровы
+class AnimalsBeastsCow(AnimalsBeasts):
+    animal_name = 'cow'
+    animal_shout = 'moo'
+    animal_eats = 'grain'
+    legs_num = 4
+    gives_milk = True
 
-cow = FarmAnimalsBeasts()
-cow.animal_shout = 'moo'
-cow.animal_eats = 'grain'
+
+cow = AnimalsBeastsCow()
 cow.headcount = 10
-cow.legs_num = 4
-cow.gives_milk = True
 
-print(cow.__dict__)
+print(cow.animal_name, cow.__dict__)
 cow.animal_shouts()
 cow.take_profit()
 
+
 # козы
+class AnimalsBeastsGoat(AnimalsBeasts):
+    animal_name = 'goat'
+    animal_shout = 'mee'
+    animal_eats = 'grass'
+    legs_num = 4
+    gives_milk = True
 
-goat = FarmAnimalsBeasts()
-goat.animal_shout = 'mee'
-goat.animal_eats = 'grass'
+
+goat = AnimalsBeastsGoat()
 goat.headcount = 3
-goat.legs_num = 4
-goat.gives_milk = True
 
-print(goat.__dict__)
+print(goat.animal_name, goat.__dict__)
 goat.animal_shouts()
 goat.take_profit()
 
 
 # овцы
+class AnimalsBeastsSheep(AnimalsBeasts):
+    animal_name = 'sheep'
+    animal_shout = 'bee'
+    animal_eats = 'grass'
+    legs_num = 4
+    gives_milk = True
 
-sheep = FarmAnimalsBeasts()
-sheep.animal_shout = 'bee'
-sheep.animal_eats = 'grass'
+
+sheep = AnimalsBeastsSheep()
 sheep.headcount = 14
-sheep.legs_num = 4
-sheep.gives_meat = True
 
-print(sheep.__dict__)
+print(sheep.animal_name, sheep.__dict__)
 sheep.animal_shouts()
 sheep.take_profit()
 
-
 # свиньи
+class AnimalsBeastsPig(AnimalsBeasts):
+    animal_name = 'pig'
+    animal_shout = 'hru'
+    animal_eats = 'grain'
+    legs_num = 4
+    gives_meat = True
 
-pig = FarmAnimalsBeasts()
-pig.animal_shout = 'hru'
-pig.animal_eats = 'grain'
+pig = AnimalsBeastsPig()
 pig.headcount = 5
-pig.legs_num = 4
-pig.gives_meat = True
 
-print(pig.__dict__)
+print(pig.animal_name, pig.__dict__)
 pig.animal_shouts()
 pig.take_profit()
 
 
 # утки
+class AnimalsBirdsDuck(AnimalsBirds):
+    animal_name = 'duck'
+    animal_shout = 'krya'
+    animal_eats = 'grain'
+    legs_num = 2
+    gives_meat = True
 
-duck = FarmAnimalsBirds()
-duck.animal_shout = 'crya'
-duck.animal_eats = 'grain'
+
+duck = AnimalsBirdsDuck()
 duck.headcount = 7
-duck.legs_num = 2
-duck.gives_meat = True
 
-print(duck.__dict__)
+print(duck.animal_name, duck.__dict__)
 duck.animal_shouts()
 duck.take_profit()
 
+
 # куры
+class AnimalsBirdsHen(AnimalsBirds):
+    animal_name = 'hen'
+    animal_shout = 'kokoko'
+    animal_eats = 'grain'
+    legs_num = 2
+    gives_eggs = True
 
-hen = FarmAnimalsBirds()
-hen.animal_shout = 'kokoko'
-hen.animal_eats = 'grain'
+
+hen = AnimalsBirdsHen()
 hen.headcount = 15
-hen.legs_num = 2
-hen.gives_eggs = True
 
-print(hen.__dict__)
+print(hen.animal_name, hen.__dict__)
 hen.animal_shouts()
 hen.take_profit()
 
+
 # гуси
+class AnimalsBirdsGoose(AnimalsBirds):
+    animal_name = 'goose'
+    animal_shout = 'gagaga'
+    animal_eats = 'grain'
+    legs_num = 2
+    gives_meat = True
 
-goose = FarmAnimalsBirds()
-goose.animal_shout = 'gaga'
-goose.animal_eats = 'grain'
+
+goose = AnimalsBirdsGoose()
 goose.headcount = 9
-goose.legs_num = 2
-goose.gives_meat = True
 
-print(goose.__dict__)
+print(goose.animal_name, goose.__dict__)
 goose.animal_shouts()
 goose.take_profit()
