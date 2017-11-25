@@ -105,3 +105,4 @@ print('Out of all', len(user_groups_list), 'groups of user', vkid, '-',
 
 for vk_group in final_result:
     print(vk_group, group_name_by_id(vk_group, VERSION))
+
